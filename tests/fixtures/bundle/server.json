@@ -1,0 +1,131 @@
+{
+  "format": 1,
+  "source": {
+    "platform": "discord",
+    "server_id": "9000",
+    "server_name": "Sample Guild",
+    "exported_at": "2024-04-01T12:00:00Z"
+  },
+  "categories": [
+    {
+      "id": "c1",
+      "name": "Text channels",
+      "position": 0
+    },
+    {
+      "id": "c2",
+      "name": "Voice channels",
+      "position": 1
+    }
+  ],
+  "channels": [
+    {
+      "id": "101",
+      "name": "general",
+      "type": "text",
+      "topic": "Welcome to the sample server",
+      "category_id": "c1",
+      "position": 0,
+      "private": false,
+      "tags": []
+    },
+    {
+      "id": "103",
+      "name": "staff",
+      "type": "text",
+      "topic": null,
+      "category_id": "c1",
+      "position": 1,
+      "private": true,
+      "tags": []
+    },
+    {
+      "id": "105",
+      "name": "ideas",
+      "type": "forum",
+      "topic": "Suggestions and bugs",
+      "category_id": "c1",
+      "position": 2,
+      "private": false,
+      "tags": [
+        {
+          "id": "t1",
+          "name": "idea"
+        },
+        {
+          "id": "t2",
+          "name": "bug"
+        }
+      ]
+    },
+    {
+      "id": "104",
+      "name": "Lounge",
+      "type": "voice",
+      "topic": null,
+      "category_id": "c2",
+      "position": 0,
+      "private": false,
+      "tags": []
+    },
+    {
+      "id": "106",
+      "name": "off-topic",
+      "type": "text",
+      "topic": null,
+      "category_id": null,
+      "position": 0,
+      "private": false,
+      "tags": []
+    },
+    {
+      "id": "107",
+      "name": "archive",
+      "type": "text",
+      "topic": null,
+      "category_id": "c1",
+      "position": 3,
+      "private": false,
+      "tags": []
+    }
+  ],
+  "authors": [
+    {
+      "id": "a1",
+      "name": "alice",
+      "avatar": "avatars/a1.png",
+      "messages": 6
+    },
+    {
+      "id": "a2",
+      "name": "bob",
+      "avatar": "avatars/a2.png",
+      "messages": 5
+    },
+    {
+      "id": "a3",
+      "name": "carol",
+      "avatar": null,
+      "messages": 3
+    },
+    {
+      "id": "a4",
+      "name": "dave",
+      "avatar": null,
+      "messages": 3
+    }
+  ],
+  "emoji": [
+    {
+      "id": "e1",
+      "name": "party",
+      "path": "emoji/e1.png"
+    }
+  ],
+  "unreadable": [
+    {
+      "id": "107",
+      "name": "archive"
+    }
+  ]
+}
