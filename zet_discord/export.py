@@ -61,6 +61,8 @@ class Report:
     too_big: list[str] = field(default_factory=list)
     failed_downloads: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
+    zip_path: Path | None = None
+    zip_bytes: int = 0
 
 
 def is_private(channel: dict, categories: dict[str, dict], everyone_id: str) -> bool:
@@ -511,4 +513,6 @@ def format_report(report: Report) -> str:
     ):
         if items:
             lines.append(f"{title}: " + "; ".join(items))
+    if report.zip_path:
+        lines.append(f"Zip: {report.zip_path} ({_size(report.zip_bytes)})")
     return "\n".join(lines)

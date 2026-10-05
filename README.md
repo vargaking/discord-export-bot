@@ -1,6 +1,6 @@
 # discord-export-bot
 
-Exports a Discord server to a folder (a bundle) that Zeta Chat can import. You run it yourself, with your own bot. Nothing is uploaded anywhere, and it only talks to Discord.
+Exports a Discord server to a folder (a bundle) and a zip of it that Zeta Chat can import. You run it yourself, with your own bot. Nothing is uploaded anywhere, and it only talks to Discord.
 
 Python 3.13 and `httpx`. No Discord library.
 
@@ -44,9 +44,11 @@ Reads everything except the files and writes nothing. It prints, per channel, th
 
 It can take a long time on a big server, because Discord limits how fast it can be read. Stop and run the same command again at any time: it continues after the last exported message of each channel and picks up anything newer. Use `--refresh` to read everything again, to catch edits and deleted messages. Use `--only <channel id> ...` to export just some channels.
 
-## 5. Hand over the folder
+## 5. Import into Zeta Chat
 
-Send the whole folder to whoever imports it into Zeta Chat. It holds your members' messages, so share it only with them. The bot token is never written to it.
+When the export finishes it also writes `bundle.zip` next to the folder (`--no-zip` skips it). In Zeta Chat, open Server settings > Import (you must own the server there) and upload `bundle.zip`. You then review what will be imported, say which author is which member, and start it.
+
+The zip holds your members' messages, so share it only with whoever imports it. The bot token is never written to it. The folder is kept: a later run continues from it and builds the zip again.
 
 Bundle layout and the decisions behind it: [docs/bundle.md](docs/bundle.md).
 
