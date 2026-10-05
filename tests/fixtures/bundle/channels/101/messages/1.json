@@ -1,0 +1,87 @@
+[
+  {
+    "id": "1001",
+    "author_id": "a1",
+    "timestamp": "2024-03-01T10:00:00Z",
+    "edited_at": null,
+    "content": "Hello everyone, welcome to the *sample* server",
+    "reply_to_id": null,
+    "pinned": true,
+    "attachments": [],
+    "embeds": [],
+    "reactions": []
+  },
+  {
+    "id": "1002",
+    "author_id": "a2",
+    "timestamp": "2024-03-01T10:05:00Z",
+    "edited_at": null,
+    "content": "Thanks <@a1>! Here is my cat",
+    "reply_to_id": "1001",
+    "pinned": false,
+    "attachments": [
+      {
+        "id": "9001",
+        "filename": "cat.png",
+        "size": 77,
+        "content_type": "image/png",
+        "path": "files/9001/cat.png"
+      }
+    ],
+    "embeds": [],
+    "reactions": []
+  },
+  {
+    "id": "1003",
+    "author_id": "a3",
+    "timestamp": "2024-03-01T10:07:30Z",
+    "edited_at": null,
+    "content": "The report is attached but wasn't downloaded",
+    "reply_to_id": null,
+    "pinned": false,
+    "attachments": [
+      {
+        "id": "9003",
+        "filename": "report.pdf",
+        "size": 123456,
+        "content_type": "application/pdf",
+        "path": null
+      }
+    ],
+    "embeds": [],
+    "reactions": []
+  },
+  {
+    "id": "1004",
+    "author_id": "a1",
+    "timestamp": "2024-03-01T10:10:00Z",
+    "edited_at": "2024-03-01T10:12:00Z",
+    "content": "Fixed **typo**",
+    "reply_to_id": null,
+    "pinned": false,
+    "attachments": [],
+    "embeds": [],
+    "reactions": []
+  },
+  {
+    "id": "1005",
+    "author_id": "a2",
+    "timestamp": "2024-03-01T10:15:00Z",
+    "edited_at": null,
+    "content": "Ship it `v1.0` cc <@a3>",
+    "reply_to_id": null,
+    "pinned": false,
+    "attachments": [],
+    "embeds": [],
+    "reactions": [
+      {
+        "emoji": "👍",
+        "count": 3
+      },
+      {
+        "emoji": "🎉",
+        "count": 1
+      }
+    ]
+  }
+]

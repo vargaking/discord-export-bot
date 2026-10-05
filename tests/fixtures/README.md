@@ -1,0 +1,1 @@
+`bundle/` is the sample bundle copied verbatim from ping-server (`tests/fixtures/bundle/`). Its format is defined in ping-server's `docs/bundle-format.md`. Update it by copying again, never by editing it here.

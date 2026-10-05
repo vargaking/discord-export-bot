@@ -1,0 +1,45 @@
+{
+  "id": "8002",
+  "title": "Look at this",
+  "tag_ids": [
+    "t1",
+    "t2"
+  ],
+  "pinned": false,
+  "locked": true,
+  "created_at": "2024-03-07T16:00:00Z",
+  "messages": [
+    {
+      "id": "8201",
+      "author_id": "a4",
+      "timestamp": "2024-03-07T16:00:00Z",
+      "edited_at": null,
+      "content": "https://example.com/cool",
+      "reply_to_id": null,
+      "pinned": false,
+      "attachments": [],
+      "embeds": [
+        {
+          "url": "https://example.com/cool",
+          "title": "A cool page",
+          "description": "Seen on the internet",
+          "site_name": "Example",
+          "image_url": "https://example.com/cool.png"
+        }
+      ],
+      "reactions": []
+    },
+    {
+      "id": "8202",
+      "author_id": "a3",
+      "timestamp": "2024-03-07T16:30:00Z",
+      "edited_at": null,
+      "content": "Nice find",
+      "reply_to_id": null,
+      "pinned": false,
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    }
+  ]
+}
