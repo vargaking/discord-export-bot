@@ -7,6 +7,13 @@ The format is defined by the importer (ping-server, `docs/bundle-format.md`, for
 - `channels/<id>/progress.json`: where the last run stopped for that channel. `last_id` is the last message id read, `chunks` the number of message chunk files, `authors` message counts per author, and `threads` the same per thread. The importer ignores it.
 - `profiles.json`: author names and avatar hashes seen so far, so a resumed run doesn't forget older authors.
 
+## Zip
+
+- After a run that isn't a dry run, `<out>.zip` is written next to the folder (`--no-zip` skips it). The folder stays; it is what the next run continues from.
+- `server.json` is at the zip's root and paths use forward slashes. Left out: `profiles.json`, every `channels/<id>/progress.json`, and leftover `.tmp` and `.part` files (under `files/` only `.part` is left out; an attachment called `notes.tmp` or `progress.json` is kept).
+- Entries are sorted by path. `.json` entries are deflated, everything else is stored, since media doesn't compress.
+- It is written to `<out>.zip.tmp` and renamed when complete, so a failed or interrupted run never leaves a half-written zip. The next run builds it again.
+
 ## Messages
 
 - Chunks hold 1000 messages and are numbered `1.json`, `2.json`, ... A resumed run tops up the last chunk. A message is never in two chunks.

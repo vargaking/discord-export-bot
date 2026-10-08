@@ -16,3 +16,7 @@ dist/
 venv/
 .env
 .env.*
+
+# Exported bundles hold members' messages
+*.zip
+*.zip.tmp

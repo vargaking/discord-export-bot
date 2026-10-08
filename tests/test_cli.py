@@ -1,28 +1,8 @@
 import json
 
 import httpx
-import pytest
 
 from tests.fakediscord import CDN, GUILD, TOKEN, message
-from zet_discord.__main__ import main
-
-
-class Run:
-    def __init__(self, discord, tmp_path, capsys, monkeypatch):
-        self.discord, self.out, self.capsys = discord, tmp_path / "bundle", capsys
-        monkeypatch.delenv("DISCORD_BOT_TOKEN", raising=False)
-
-    def __call__(self, *args, token=TOKEN, transport=None):
-        environ = {"DISCORD_BOT_TOKEN": token} if token is not None else {}
-        code = main(["export", "--server", GUILD, "--out", str(self.out), *args], environ=environ,
-                    transport=transport or self.discord.transport, sleep=lambda s: None)
-        captured = self.capsys.readouterr()
-        return code, captured.out, captured.err
-
-
-@pytest.fixture
-def cli(discord, tmp_path, capsys, monkeypatch):
-    return Run(discord, tmp_path, capsys, monkeypatch)
 
 
 def test_missing_token_is_a_clear_error(cli):

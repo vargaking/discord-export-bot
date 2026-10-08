@@ -3,6 +3,7 @@ import json
 import os
 import re
 import shutil
+import zipfile
 from pathlib import Path
 
 FORMAT = 1
@@ -72,6 +73,47 @@ class Bundle:
 
     def thread_path(self, channel_id: str, thread_id: str) -> str:
         return f"channels/{channel_id}/threads/{thread_id}.json"
+
+    @property
+    def zip_path(self) -> Path:
+        root = Path(os.path.abspath(self.root))
+        return root.with_name(root.name + ".zip")
+
+    def write_zip(self) -> Path:
+        """Zip the bundle with server.json at the root, leaving out the
+        exporter's own bookkeeping. The zip appears under its real name only
+        once it is complete."""
+        target = self.zip_path
+        tmp = target.with_name(target.name + ".tmp")
+        try:
+            with zipfile.ZipFile(tmp, "w", strict_timestamps=False) as archive:
+                for relative in self._zip_members():
+                    kind = zipfile.ZIP_DEFLATED if relative.endswith(".json") else zipfile.ZIP_STORED
+                    archive.write(self.path(relative), relative, compress_type=kind)
+            os.replace(tmp, target)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
+        return target
+
+    def _zip_members(self) -> list[str]:
+        members = []
+        for directory, _, names in os.walk(self.root):
+            for name in names:
+                path = Path(directory, name)
+                relative = path.relative_to(self.root)
+                if path.is_file() and not _is_bookkeeping(relative.parts):
+                    members.append(relative.as_posix())
+        return sorted(members)
+
+
+def _is_bookkeeping(parts: tuple[str, ...]) -> bool:
+    """Files the exporter keeps for itself. Under files/ only a half-downloaded
+    .part is, since a .tmp or progress.json there is someone's attachment."""
+    name = parts[-1]
+    if parts == ("profiles.json",) or (len(parts) == 3 and parts[0] == "channels" and name == "progress.json"):
+        return True
+    return name.endswith(".part") or (name.endswith(".tmp") and parts[0] != "files")
 
 
 def safe_filename(name: str) -> str:

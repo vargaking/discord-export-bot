@@ -7,7 +7,8 @@ from pathlib import Path
 import httpx
 
 from zet_discord.api import DiscordClient, DiscordError
-from zet_discord.export import ExportError, Exporter, Options, format_report
+from zet_discord.bundle import Bundle
+from zet_discord.export import ExportError, Exporter, Options, Report, format_report
 
 TOKEN_VARIABLE = "DISCORD_BOT_TOKEN"
 
@@ -23,6 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
                         help="don't download attachments above this size; 0 means no limit (default 25)")
     export.add_argument("--dry-run", action="store_true",
                         help="read everything except the files, write nothing, print what would be exported")
+    export.add_argument("--no-zip", action="store_true", help="don't write <out>.zip next to the folder")
     export.add_argument("--refresh", action="store_true",
                         help="read every channel again instead of continuing, to pick up edits and deletions")
     return parser
@@ -53,8 +55,12 @@ def main(argv=None, *, environ: Mapping[str, str] | None = None, transport: http
     )
     client_options = {"transport": transport, **({"sleep": sleep} if sleep else {})}
     client = DiscordClient(token, **client_options)
+
+    def log(line: str) -> None:
+        print(line, file=stderr)
+
     try:
-        report = Exporter(client, options, log=lambda line: print(line, file=stderr)).run()
+        report = Exporter(client, options, log=log).run()
     except ExportError as error:
         print(error, file=stderr)
         return 2
@@ -66,8 +72,24 @@ def main(argv=None, *, environ: Mapping[str, str] | None = None, transport: http
         return 1
     finally:
         client.close()
+    zip_failure = None
+    if not args.dry_run and not args.no_zip:
+        try:
+            _write_zip(Bundle(args.out), report, log)
+        except OSError as error:
+            zip_failure = error
     print(format_report(report), file=stdout)
+    if zip_failure:
+        print(f"Couldn't write the zip ({zip_failure}). The bundle folder is complete; "
+              "run the command again to build the zip.", file=stderr)
+        return 1
     return 0
+
+
+def _write_zip(bundle: Bundle, report: Report, log) -> None:
+    log(f"Zipping the bundle to {bundle.zip_path}")
+    report.zip_path = bundle.write_zip()
+    report.zip_bytes = report.zip_path.stat().st_size
 
 
 def _hint(status: int) -> str:
